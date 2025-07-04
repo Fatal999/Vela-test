@@ -1,8 +1,16 @@
 import './third-menu.scss'
 
-export default function ThirdMenu() {
+type SecondMenu = {
+  activeThird: () => void
+  activeFourth: () => void
+}
+
+export default function ThirdMenu({ activeThird, activeFourth }: SecondMenu) {
   return (
     <div className="header__third-menu">
+      <button type="button" onClick={activeThird}>
+        Prev
+      </button>
       <h1>Смартфоны</h1>
       <ul>
         <li>
@@ -11,7 +19,7 @@ export default function ThirdMenu() {
           </button>
         </li>
         <li>
-          <button type="button">
+          <button type="button" onClick={activeFourth}>
             Смартфоны<span>227</span>
           </button>
         </li>

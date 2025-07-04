@@ -1,12 +1,22 @@
 import './second-menu.scss'
 
-export default function SecondMenu() {
+type SecondMenu = {
+  activeSecond: () => void
+  activeThird: () => void
+}
+
+export default function SecondMenu({ activeSecond, activeThird }: SecondMenu) {
   return (
     <div className="header__second-menu">
+      <button type="button" onClick={activeSecond}>
+        Prev
+      </button>
       <h1>Каталог</h1>
       <ul>
         <li>
-          <button type="button">Смартфоны и гаджеты</button>
+          <button type="button" onClick={activeThird}>
+            Смартфоны и гаджеты
+          </button>
         </li>
         <li>
           <button type="button">Ноутбуки и компьютеры</button>

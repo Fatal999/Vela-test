@@ -1,8 +1,15 @@
 import './fourth-menu.scss'
 
-export default function FourthMenu() {
+type SecondMenu = {
+  activeFourth: () => void
+}
+
+export default function FourthMenu({ activeFourth }: SecondMenu) {
   return (
     <div className="header__fourth-menu">
+      <button type="button" onClick={activeFourth}>
+        Prev
+      </button>
       <h1>Гаджеты</h1>
       <ul>
         <li>

@@ -1,8 +1,8 @@
 import './header.scss'
 import FirstMenu from '../../blocks/first-menu/first-menu'
-// import SecondMenu from '../../blocks/second-menu/second-menu'
-// import ThirdMenu from '../../blocks/third-menu/third-menu'
-// import FourthMenu from '../../blocks/fourth-menu/fourth-menu'
+import SecondMenu from '../../blocks/second-menu/second-menu'
+import ThirdMenu from '../../blocks/third-menu/third-menu'
+import FourthMenu from '../../blocks/fourth-menu/fourth-menu'
 import LanguageIcon from '../../../assets/icons/language.svg?react'
 import PhoneIcon from '../../../assets/icons/phone.svg?react'
 import LogoIcon from '../../../assets/icons/logo.svg?react'
@@ -10,31 +10,73 @@ import { useState } from 'react'
 
 export default function Header() {
   const [firstActiveMenu, setFirstActiveMenu] = useState(false)
-  // const [secondActiveMenu, setSecondActiveMenu] = useState(false)
-  // const [thirdActiveMenu, setThirdActiveMenu] = useState(false)
-  // const [fourthActiveMenu, setFourthActiveMenu] = useState(false)
+  const [secondActiveMenu, setSecondActiveMenu] = useState(false)
+  const [thirdActiveMenu, setThirdActiveMenu] = useState(false)
+  const [fourthActiveMenu, setFourthActiveMenu] = useState(false)
 
-  function toggleFirstMenu() {
-    if (!firstActiveMenu) {
-      setFirstActiveMenu(true)
+  const burgerButton = document.querySelector(
+    '.header__menu-burger',
+  ) as HTMLElement
 
-      const burgerButton = document.querySelector(
-        '.header__menu-burger',
-      ) as HTMLElement
+  function closeMenu() {
+    setFirstActiveMenu(false)
+    setSecondActiveMenu(false)
+    setThirdActiveMenu(false)
+    setFourthActiveMenu(false)
 
-      burgerButton.style.backgroundImage =
-        'url(../../src/assets/icons/burger-open.svg)'
-      burgerButton.style.backgroundColor = '#e8e8e8'
+    burgerButton.style.backgroundImage =
+      'url(../../src/assets/icons/burger-close.svg)'
+    burgerButton.style.backgroundColor = '#4888ff'
+  }
+
+  function openFirstMenu() {
+    setFirstActiveMenu(true)
+
+    burgerButton.style.backgroundImage =
+      'url(../../src/assets/icons/burger-open.svg)'
+    burgerButton.style.backgroundColor = '#e8e8e8'
+  }
+
+  function toggleMenu() {
+    if (
+      firstActiveMenu ||
+      secondActiveMenu ||
+      thirdActiveMenu ||
+      fourthActiveMenu
+    ) {
+      closeMenu()
     } else {
+      openFirstMenu()
+    }
+  }
+
+  function toggleSecondMenu() {
+    if (!secondActiveMenu) {
       setFirstActiveMenu(false)
+      setSecondActiveMenu(true)
+    } else {
+      setFirstActiveMenu(true)
+      setSecondActiveMenu(false)
+    }
+  }
 
-      const burgerButton = document.querySelector(
-        '.header__menu-burger',
-      ) as HTMLElement
+  function toggleThirdMenu() {
+    if (!thirdActiveMenu) {
+      setThirdActiveMenu(true)
+      setSecondActiveMenu(false)
+    } else {
+      setThirdActiveMenu(false)
+      setSecondActiveMenu(true)
+    }
+  }
 
-      burgerButton.style.backgroundImage =
-        'url(../../src/assets/icons/burger-close.svg)'
-      burgerButton.style.backgroundColor = '#4888ff'
+  function toggleFourthMenu() {
+    if (!fourthActiveMenu) {
+      setFourthActiveMenu(true)
+      setThirdActiveMenu(false)
+    } else {
+      setFourthActiveMenu(false)
+      setThirdActiveMenu(true)
     }
   }
 
@@ -59,7 +101,7 @@ export default function Header() {
         <div className="header__menu">
           <button
             className="header__menu-burger"
-            onClick={toggleFirstMenu}
+            onClick={toggleMenu}
             type="button"
           ></button>
           <button className="header__menu-hunter" type="button"></button>
@@ -81,10 +123,24 @@ export default function Header() {
           <button className="header__search-button" type="button"></button>
         </div>
       </div>
-      {firstActiveMenu && <FirstMenu></FirstMenu>}
-      {/* {secondActiveMenu && <SecondMenu></SecondMenu>} */}
-      {/* {thirdActiveMenu && <ThirdMenu></ThirdMenu>}
-      {fourthActiveMenu && <FourthMenu></FourthMenu>} */}
+      {firstActiveMenu && (
+        <FirstMenu activeSecond={toggleSecondMenu}></FirstMenu>
+      )}
+      {secondActiveMenu && (
+        <SecondMenu
+          activeSecond={toggleSecondMenu}
+          activeThird={toggleThirdMenu}
+        ></SecondMenu>
+      )}
+      {thirdActiveMenu && (
+        <ThirdMenu
+          activeThird={toggleThirdMenu}
+          activeFourth={toggleFourthMenu}
+        ></ThirdMenu>
+      )}
+      {fourthActiveMenu && (
+        <FourthMenu activeFourth={toggleFourthMenu}></FourthMenu>
+      )}
     </header>
   )
 }

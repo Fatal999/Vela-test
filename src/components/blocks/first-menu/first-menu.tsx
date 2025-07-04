@@ -1,6 +1,10 @@
 import './first-menu.scss'
 
-export default function FirstMenu() {
+type SecondMenu = {
+  activeSecond: () => void
+}
+
+export default function FirstMenu({ activeSecond }: SecondMenu) {
   return (
     <div className="header__first-menu">
       <div>
@@ -13,7 +17,9 @@ export default function FirstMenu() {
       </div>
       <ul>
         <li>
-          <button type="button">Каталог</button>
+          <button type="button" onClick={activeSecond}>
+            Каталог
+          </button>
         </li>
         <li>
           <button type="button">Акции</button>
