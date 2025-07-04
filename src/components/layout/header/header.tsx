@@ -1,9 +1,43 @@
 import './header.scss'
+import FirstMenu from '../../blocks/first-menu/first-menu'
+// import SecondMenu from '../../blocks/second-menu/second-menu'
+// import ThirdMenu from '../../blocks/third-menu/third-menu'
+// import FourthMenu from '../../blocks/fourth-menu/fourth-menu'
 import LanguageIcon from '../../../assets/icons/language.svg?react'
 import PhoneIcon from '../../../assets/icons/phone.svg?react'
 import LogoIcon from '../../../assets/icons/logo.svg?react'
+import { useState } from 'react'
 
 export default function Header() {
+  const [firstActiveMenu, setFirstActiveMenu] = useState(false)
+  // const [secondActiveMenu, setSecondActiveMenu] = useState(false)
+  // const [thirdActiveMenu, setThirdActiveMenu] = useState(false)
+  // const [fourthActiveMenu, setFourthActiveMenu] = useState(false)
+
+  function toggleFirstMenu() {
+    if (!firstActiveMenu) {
+      setFirstActiveMenu(true)
+
+      const burgerButton = document.querySelector(
+        '.header__menu-burger',
+      ) as HTMLElement
+
+      burgerButton.style.backgroundImage =
+        'url(../../src/assets/icons/burger-open.svg)'
+      burgerButton.style.backgroundColor = '#e8e8e8'
+    } else {
+      setFirstActiveMenu(false)
+
+      const burgerButton = document.querySelector(
+        '.header__menu-burger',
+      ) as HTMLElement
+
+      burgerButton.style.backgroundImage =
+        'url(../../src/assets/icons/burger-close.svg)'
+      burgerButton.style.backgroundColor = '#4888ff'
+    }
+  }
+
   return (
     <header className="header">
       <div className="header__info">
@@ -23,10 +57,12 @@ export default function Header() {
       </div>
       <div className="header__nav">
         <div className="header__menu">
-          <button className="header__menu-burger" type="button"></button>
-          <button className="header__menu-hunter" type="button">
-            FF
-          </button>
+          <button
+            className="header__menu-burger"
+            onClick={toggleFirstMenu}
+            type="button"
+          ></button>
+          <button className="header__menu-hunter" type="button"></button>
         </div>
         <div className="header__wrapper">
           <LogoIcon className="header__wrapper-icon"></LogoIcon>
@@ -45,6 +81,10 @@ export default function Header() {
           <button className="header__search-button" type="button"></button>
         </div>
       </div>
+      {firstActiveMenu && <FirstMenu></FirstMenu>}
+      {/* {secondActiveMenu && <SecondMenu></SecondMenu>} */}
+      {/* {thirdActiveMenu && <ThirdMenu></ThirdMenu>}
+      {fourthActiveMenu && <FourthMenu></FourthMenu>} */}
     </header>
   )
 }
